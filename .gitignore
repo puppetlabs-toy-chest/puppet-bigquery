@@ -1,0 +1,10 @@
+Include
+Lib
+Scripts
+tcl
+share
+*~
+*.bak
+*.cache.dat
+*.cache.dir
+pip-selfcheck.json

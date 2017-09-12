@@ -1,0 +1,4 @@
+google-cloud-bigquery
+pygal
+terminaltables
+filecache
