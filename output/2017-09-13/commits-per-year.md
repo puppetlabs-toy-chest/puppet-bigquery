@@ -33,4 +33,4 @@ ORDER BY author_date DESC
 | 2001 | 490     |
 | 2000 | 211     |
 
-![Commits](assets/commits-per-year.png)
+![Commits per year](assets/commits-per-year.png)

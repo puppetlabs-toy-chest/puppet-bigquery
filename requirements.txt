@@ -2,3 +2,5 @@ google-cloud-bigquery
 pygal
 terminaltables
 filecache
+click
+colorama
