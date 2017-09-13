@@ -1,0 +1,1 @@
+[["add_dotdeb", 75], ["mysql_db", 68], ["mysql_nginx_default_conf", 57], ["mongodb_db", 52], ["nginx_vhost", 49], ["postgresql_db", 40], ["mariadb_db", 39], ["mariadb_nginx_default_conf", 38], ["safepackage", 31], ["iptables_port", 26], ["apache::loadmodule", 21], ["apache::mod", 20], ["namedir_copy", 15], ["apache::vhost", 12], ["wget::fetch", 12]]

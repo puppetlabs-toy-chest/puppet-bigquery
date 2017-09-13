@@ -56,12 +56,16 @@ def prepare_output_dir(path):
     if not os.path.exists(assets):
         debug("Preparing assets folder %s" % assets)
         os.makedirs(assets)
+    data = "%s/data" % directory
+    if not os.path.exists(data):
+        debug("Preparing data folder %s" % data)
+        os.makedirs(data)
     return directory
 
 def save_data(query, path, directory):
     debug("Saving data for %s" % path)
     results = run_query(query)
-    with open("%s/%s.json" % (directory, path), 'w') as json_file:
+    with open("%s/data/%s.json" % (directory, path), 'w') as json_file:
         json_file.write(json.dumps(results))
 
 def save_markdown(query, path, directory):
