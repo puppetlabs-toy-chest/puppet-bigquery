@@ -1,4 +1,9 @@
 import uuid
+import os
+import json
+from os import walk
+from os.path import splitext
+from datetime import datetime
 
 from google.cloud import bigquery
 from filecache import filecache
@@ -6,7 +11,7 @@ from terminaltables import AsciiTable, GithubFlavoredMarkdownTable
 import pygal
 
 
-CACHE_TIME_SECONDS = 24 * 60 * 60
+CACHE_TIME_SECONDS = 5 * 24 * 60 * 60
 
 @filecache(CACHE_TIME_SECONDS)
 def run_query(q):
@@ -41,10 +46,29 @@ def line_chart(query, label, name):
         return False
 
 
-def markdown(query, title, header):
-    path = title.lower().replace(' ', '-')
-    chart = line_chart(query, title, "output/assets/%s.svg" % path)
-    with open("output/%s.md" % path, 'w') as md:
+def data(query, path):
+    title = path.replace("-", " ").capitalize()
+    results = run_query(query)
+    date = datetime.now().strftime("%Y-%m-%d")
+    directory = "output/%s" % date
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    with open("%s/%s.json" % (directory, path), 'w') as json_file:
+        json_file.write(json.dumps(results))
+
+
+
+def markdown(query, path, header):
+    title = path.replace("-", " ").capitalize()
+    date = datetime.now().strftime("%Y-%m-%d")
+    directory = "output/%s" % date
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    assets = "%s/assets" % directory
+    if not os.path.exists(assets):
+        os.makedirs(assets)
+    chart = line_chart(query, title, "%s/%s.svg" % (assets, path))
+    with open("%s/%s.md" % (directory, path), 'w') as md:
         data = table(query, header, GithubFlavoredMarkdownTable)
         code = "```sql\n%s\n```" % query
         if chart:
@@ -56,14 +80,14 @@ def markdown(query, title, header):
         md.write(out)
 
 
-paths = [
-  'commits-per-year',
-  'count-puppet',
-]
+paths = []
+for (dirpath, dirnames, filenames) in walk('queries'):
+    paths.extend(filenames)
 
 for path in paths:
-    with open("%s.sql" % path, 'r') as sql:
+    with open("queries/%s" % path, 'r') as sql:
         query = sql.read()
     header = query.split("\n")[0].strip('-- ').split(',')
-    title = path.replace("-", " ").capitalize()
-    markdown(query, title, header)
+    identifier = splitext(path)[0]
+    markdown(query, identifier, header)
+    data(query, identifier)
