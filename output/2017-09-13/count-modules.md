@@ -1,4 +1,4 @@
-# Count modules
+# Count repositories
 
 ```sql
 -- Modules
