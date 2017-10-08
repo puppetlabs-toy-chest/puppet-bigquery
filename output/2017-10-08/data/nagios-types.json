@@ -1,0 +1,1 @@
+[["nagios_service", 160], ["nagios_command", 56], ["nagios_host", 49], ["nagios_servicedependency", 35], ["nagios_contact", 18], ["nagios_servicegroup", 10], ["nagios_hostextinfo", 8], ["nagios_timeperiod", 5], ["nagios_hostdependency", 3], ["nagios_serviceescalation", 2], ["nagios_hostescalation", 1]]
