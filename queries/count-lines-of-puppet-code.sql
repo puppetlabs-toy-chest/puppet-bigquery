@@ -1,7 +1,7 @@
 -- Lines
 SELECT 
-  COUNT(line) total_lines
+  SUM(num) total_lines
 FROM (
-  SELECT SPLIT(content, '\n') AS line
-  FROM [puppet.puppet_content]
+  SELECT ARRAY_LENGTH(SPLIT(content, '\n')) AS num
+  FROM `puppet.puppet_content`
 )
